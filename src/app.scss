@@ -1,0 +1,94 @@
+$primary: #3e5879;
+$theme-colors: (
+	"primary": $primary,
+	"dark": rgb(0, 0, 0),
+    "elderly": #ff4164,
+    "elderly-light": lighten(#ff4164, 30%),
+    "disabled": #fb9b9c,
+    "disabled-light": lighten(#fb9b9c, 10%),
+    "veteran": #fbcdaf,
+    "veteran-light": lighten(#fbcdaf, 10%),
+    "hasClaim": #c8c8ab,
+    "hasClaim-light": lighten(#c8c8ab, 13%),
+    "oldApplicant": #83af9b,
+    "oldApplicant-light": lighten(#83af9b, 25%),
+    "light": #fff
+);
+
+$border-radius: 6px;
+
+@import "bootstrap/scss/bootstrap";
+
+
+body {
+    background-color: #f8f9fc;
+    color: #333;
+}
+
+.sidebar {
+    width: 280px;
+    background-color: #3e5879;
+    color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+}
+
+.card {
+    background-color: #fff;
+    border: none;
+    border-left: 8px solid #000;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+
+    &.no-border {
+        border-left: none;
+    }
+
+    &.category-elderly {
+        border-left-color: map-get($theme-colors, "elderly");
+
+        h3 {
+            color: map-get($theme-colors, "elderly");
+        }
+    }
+
+    &.category-disabled {
+        border-left-color: map-get($theme-colors, "disabled");
+
+        h3 {
+            color: map-get($theme-colors, "disabled");
+        }
+    }
+
+    &.category-veteran {
+        border-left-color: map-get($theme-colors, "veteran");
+
+        h3 {
+            color: map-get($theme-colors, "veteran");
+        }
+    }
+
+    &.category-hasClaim {
+        border-left-color: map-get($theme-colors, "hasClaim");
+
+        h3 {
+            color: map-get($theme-colors, "hasClaim");
+        }
+    }
+
+    &.category-oldApplicant {
+        border-left-color: map-get($theme-colors, "oldApplicant");
+
+        h3 {
+            color: map-get($theme-colors, "oldApplicant");
+        }
+    }
+}
+
+.navbar {
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.beneficiaries-table {
+    text-align: center;
+}
