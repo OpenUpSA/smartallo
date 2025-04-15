@@ -14,7 +14,7 @@ export default function Criteria() {
     const [selectedCriteria, setSelectedCriteria] = useState("2020");
 
     const data = {
-        labels: criteria.filter(c => c.Year == selectedCriteria).map(item => item.Category),
+        labels: criteria?.filter(c => c.Year == selectedCriteria).map(item => item.Category),
         datasets: [
             {
                 label: 'Categories',
