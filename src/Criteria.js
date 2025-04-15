@@ -87,7 +87,7 @@ export default function Criteria() {
                     <Col>
                         <Card className="no-border">
                             <Card.Body>
-                                <Doughnut data={data} />
+                                {/* <Doughnut data={data} /> */}
                             </Card.Body>
                         </Card>
                     </Col>
