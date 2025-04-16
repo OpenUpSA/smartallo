@@ -21,6 +21,15 @@ export const AppProvider = ({ children }) => {
 
 	const [spaces, setSpaces] = useState(0);
 
+	const colors = {
+		Elderly: "#ff4164",
+		Disabled: "#fb9b9c",
+		Veteran: "#fbcdaf",
+		hasClaim: "#c8c8ab",
+		OldApplicant: "#83af9b",
+		Discretionary: "#666"
+	}
+
 	useEffect(() => {
 		fetch("./beneficiaries.csv")
 			.then((res) => res.text())
@@ -106,6 +115,7 @@ export const AppProvider = ({ children }) => {
     return (
         <AppContext.Provider value={
             {
+				colors,
 				criteria,
 				selectedCriteria,
 				setSelectedCriteria,

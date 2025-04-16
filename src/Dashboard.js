@@ -40,7 +40,7 @@ export default function Dashboard() {
                     </Col>
 					<Col xs="auto">
 						<Dropdown>
-							<Dropdown.Toggle size="lg" id="dropdown-basic">
+							<Dropdown.Toggle size="md" id="dropdown-basic">
 								{selectedMunicipality ? municipalities.find(m => m.Muni == selectedMunicipality).Name : "Select Municipality"}
 							</Dropdown.Toggle>
 
@@ -58,7 +58,7 @@ export default function Dashboard() {
 					</Col>
 
 					<Col xs="auto">
-						<Form.Control size="lg" type="text" placeholder="Spaces" onChange={(e) => setSpaces(e.target.value)} />
+						<Form.Control size="md" type="text" placeholder="Spaces" onChange={(e) => setSpaces(e.target.value)} />
 					</Col>
 					{
 						selectedMunicipality != null && spaces > 0 && 
@@ -68,7 +68,7 @@ export default function Dashboard() {
 							</Col>
 							<Col xs="auto">
 								<Dropdown>
-									<Dropdown.Toggle size="lg" id="dropdown-basic">
+									<Dropdown.Toggle size="md" id="dropdown-basic">
 										{selectedCriteria}
 									</Dropdown.Toggle>
 

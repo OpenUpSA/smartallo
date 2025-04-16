@@ -9,7 +9,7 @@ import { useAppContext } from './AppContext';
 
 export default function Criteria() {
 
-    const { criteria } = useAppContext();
+    const { criteria, colors } = useAppContext();
 
     const [selectedCriteria, setSelectedCriteria] = useState("2020");
 
@@ -32,14 +32,7 @@ export default function Criteria() {
                         type: 'donut',
                     },
                     labels: criteria?.filter(c => c.Year == selectedCriteria).map(item => item.Category),
-                    colors: [
-                        '#ff4164',
-                        '#fb9b9c',
-                        '#fbcdaf',
-                        '#c8c8ab',
-                        '#83af9b',
-                        '#999',
-                    ],
+                    colors: Object.keys(colors).map(key => colors[key]),
                     responsive: [{
                         breakpoint: 480,
                         options: {
@@ -74,7 +67,7 @@ export default function Criteria() {
                     </Col>
                     <Col xs="auto">
                         <Dropdown>
-                            <Dropdown.Toggle size="lg" id="dropdown-basic">
+                            <Dropdown.Toggle size="md" id="dropdown-basic">
                                 {selectedCriteria}
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
