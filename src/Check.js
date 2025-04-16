@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Navbar, Nav, Card, Dropdown, Table, Form } from 'react-bootstrap';
+import { Container, Row, Col, Navbar, Nav, Card, Dropdown, Table, Form, Button } from 'react-bootstrap';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShield, faPersonCane, faWheelchair, faPaperclip, faReceipt, faQuestion } from "@fortawesome/free-solid-svg-icons";
 
 import { useAppContext } from './AppContext';
 
-export default function Dashboard() {
+export default function Check() {
 
 	const { colors, criteria, spaces, setSpaces, selectedCriteria, setSelectedCriteria, municipalities, selectedMunicipality, setSelectedMunicipality, pool, setPool } = useAppContext();
 	
+    const [checkText, setCheckText] = useState("");
+    const [checkList, setChecklist] = useState([]);
+
 	function countByField(field) {
 		const count = pool.reduce((acc, item) => {
 			if (parseInt(item[field]) === 1) {
@@ -31,6 +34,18 @@ export default function Dashboard() {
 		)
 	}
 
+    const validateCheckList = () => {
+        
+        
+        const lines = checkText.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+        
+        if(lines.length > 0) {
+            setChecklist(lines);
+        }
+
+
+    }
+
 	useEffect(() => {
 		if(selectedMunicipality == null) {
 			setSpaces(0);
@@ -42,7 +57,7 @@ export default function Dashboard() {
 			<Container fluid className="p-4">
 				<Row className="mb-5">
                     <Col>
-                        
+                        <h1><strong>SMART</strong>CHECK</h1>
                     </Col>
 					<Col xs="auto">
 						<Dropdown>
@@ -89,15 +104,17 @@ export default function Dashboard() {
 					}
                 </Row>
 
+                <Row>
+                    <Col>
+                        <Form.Control as="textarea" placeholder="Paste ID Numbers" onChange={(e) => setCheckText(e.target.value)}/>
+                        <Button variant="primary" className="mt-2" onClick={() => validateCheckList()}>Check</Button>
+                    </Col>
+                </Row>
+
+                { selectedMunicipality != null && spaces > 0 && checkList.length > 0 &&
+                <>
 				<Row className="mb-4">
-					{/* <Col md={4} className="mb-4">
-						<Card>
-							<Card.Body>
-								<Card.Title>Beneficiaries</Card.Title>
-								<Card.Text>{pool.length}</Card.Text>
-							</Card.Body>
-						</Card>
-					</Col> */}
+					
 					<Col md={4} className="mb-4">
 						<Card className="category-elderly">
 							<Card.Body>
@@ -287,53 +304,54 @@ export default function Dashboard() {
 						</Col>
 					}
 				</Row>
-
-				<Row>
-					<Col>
-						<Card className="no-border">
-							<Card.Body>
-								<Table className="beneficiaries-table">
-									<thead>
-										<tr>
-											<th className="text-start">Muni</th>
-											<th className="text-start">Name</th>
-											<th className="text-start">Surname</th>
-											<th className="text-start">ID Number</th>
-											<th>Allocated</th>
-											<th>Valid</th>
-											<th>Elderly</th>
-											<th>Disabled</th>
-											<th>Veteran</th>
-											<th>Has Claim</th>
-											<th>Old Applicant</th>
-											<th>Score</th>
-										</tr>
-									</thead>
-									<tbody>
-										{
-											pool?.map((beneficiary, index) => (
-												<tr key={index}>
-													<td className="text-start">{beneficiary.Muni}</td>
-													<td className="text-start">{beneficiary.Name}</td>
-													<td className="text-start">{beneficiary.Surname}</td>
-													<td className="text-start">{beneficiary['ID Number']}</td>
-													<td>{beneficiary.Allocated}</td>
-													<td>{beneficiary.Valid}</td>
-													<td className={yesno('elderly',beneficiary.Elderly)}>{beneficiary.Elderly}</td>
-													<td className={yesno('disabled',beneficiary.Disabled)}>{beneficiary.Disabled}</td>
-													<td className={yesno('veteran',beneficiary.Veteran)}>{beneficiary.Veteran}</td>
-													<td className={yesno('hasClaim',beneficiary.HasClaim)}>{beneficiary.HasClaim}</td>
-													<td className={yesno('oldApplicant',beneficiary.OldApplicant)}>{beneficiary.OldApplicant}</td>
-													<td>{beneficiary.Score}</td>
-												</tr>
-											))
-										}
-									</tbody>
-								</Table>
-							</Card.Body>
-						</Card>
-					</Col>
-				</Row>
+                <Row>
+                    <Col>
+                        <Card className="no-border">
+                            <Card.Body>
+                                <Table className="beneficiaries-table">
+                                    <thead>
+                                        <tr>
+                                            <th className="text-start">Muni</th>
+                                            <th className="text-start">Name</th>
+                                            <th className="text-start">Surname</th>
+                                            <th className="text-start">ID Number</th>
+                                            <th>Allocated</th>
+                                            <th>Valid</th>
+                                            <th>Elderly</th>
+                                            <th>Disabled</th>
+                                            <th>Veteran</th>
+                                            <th>Has Claim</th>
+                                            <th>Old Applicant</th>
+                                            <th>Score</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            pool?.map((beneficiary, index) => (
+                                                <tr key={index}>
+                                                    <td className="text-start">{beneficiary.Muni}</td>
+                                                    <td className="text-start">{beneficiary.Name}</td>
+                                                    <td className="text-start">{beneficiary.Surname}</td>
+                                                    <td className="text-start">{beneficiary['ID Number']}</td>
+                                                    <td>{beneficiary.Allocated}</td>
+                                                    <td>{beneficiary.Valid}</td>
+                                                    <td className={yesno('elderly',beneficiary.Elderly)}>{beneficiary.Elderly}</td>
+                                                    <td className={yesno('disabled',beneficiary.Disabled)}>{beneficiary.Disabled}</td>
+                                                    <td className={yesno('veteran',beneficiary.Veteran)}>{beneficiary.Veteran}</td>
+                                                    <td className={yesno('hasClaim',beneficiary.HasClaim)}>{beneficiary.HasClaim}</td>
+                                                    <td className={yesno('oldApplicant',beneficiary.OldApplicant)}>{beneficiary.OldApplicant}</td>
+                                                    <td>{beneficiary.Score}</td>
+                                                </tr>
+                                            ))
+                                        }
+                                    </tbody>
+                                </Table>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
+                </>
+                }
 
 				
 

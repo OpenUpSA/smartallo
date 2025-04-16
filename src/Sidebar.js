@@ -16,6 +16,7 @@ export default function Sidebar() {
                 <Nav className="flex-column">
                     <Nav.Link onClick={() => navigate('/')} className="text-light">Dashboard</Nav.Link>
                     <Nav.Link onClick={() => navigate('/criteria')} href="#" className="text-light">Criteria</Nav.Link>
+                    <Nav.Link onClick={() => navigate('/check')} href="#" className="text-light">Check</Nav.Link>
                 </Nav>
             </div>
         </div>

@@ -12,7 +12,9 @@ $theme-colors: (
     "hasClaim-light": lighten(#c8c8ab, 13%),
     "oldApplicant": #83af9b,
     "oldApplicant-light": lighten(#83af9b, 25%),
-    "light": #fff
+    "light": #fff,
+    "discretionary": #666,
+    "discretionary-light": lighten(#666, 25%)
 );
 
 $border-radius: 6px;
@@ -42,6 +44,11 @@ body {
 
     &.no-border {
         border-left: none;
+    }
+
+    h3 {
+        font-size: 1.4em;
+        font-weight: bold;
     }
 
     &.category-elderly {
@@ -83,11 +90,25 @@ body {
             color: map-get($theme-colors, "oldApplicant");
         }
     }
+
+    &.category-discretionary {
+        border-left-color: map-get($theme-colors, "discretionary");
+
+        h3 {
+            color: map-get($theme-colors, "discretionary");
+        }
+    }
 }
 
 .navbar {
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    h1 {
+        font-size: 1.3rem;
+        color: #fff;
+        margin: 0;
+    }
 }
 
 .beneficiaries-table {

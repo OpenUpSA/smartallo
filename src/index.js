@@ -10,6 +10,7 @@ import Sidebar from "./Sidebar.js";
 import TopBar from "./Topbar.js";
 import Dashboard from "./Dashboard.js";
 import Criteria from "./Criteria.js";
+import Check from "./Check.js";
 
 
 export default function App() {
@@ -23,12 +24,13 @@ export default function App() {
 		<div style={{ display: 'flex', minHeight: '100vh' }}>
 			<BrowserRouter>
 				<AppProvider>			
-				<Sidebar/>
+				{/* <Sidebar/> */}
 				<div style={{ flex: 1 }}>
 					<TopBar/>	
 					<Routes>
 						<Route path="/" element={<Dashboard/>} />
 						<Route path="/criteria" element={<Criteria/>} />
+						<Route path="/check" element={<Check/>} />
 					</Routes>
 				</div>
 			
