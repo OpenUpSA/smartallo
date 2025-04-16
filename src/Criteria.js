@@ -25,13 +25,13 @@ export default function Criteria() {
             {
 
 
-                series: criteria?.filter(c => c.Year == selectedCriteria).map(item => parseInt(item.Percentage)),
+                series: criteria?.filter(c => c.Name == selectedCriteria).map(item => parseInt(item.Percentage)),
                 
                 options: {
                     chart: {
                         type: 'donut',
                     },
-                    labels: criteria?.filter(c => c.Year == selectedCriteria).map(item => item.Category),
+                    labels: criteria?.filter(c => c.Name == selectedCriteria).map(item => item.Category),
                     colors: Object.keys(colors).map(key => colors[key]),
                     responsive: [{
                         breakpoint: 480,
@@ -73,6 +73,7 @@ export default function Criteria() {
                             <Dropdown.Menu>
                                 <Dropdown.Item onClick={() => setSelectedCriteria("2020")}>2020</Dropdown.Item>
                                 <Dropdown.Item onClick={() => setSelectedCriteria("2025")}>2025</Dropdown.Item>
+                                <Dropdown.Item onClick={() => setSelectedCriteria("Vets")}>Vets</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </Col>
@@ -91,7 +92,7 @@ export default function Criteria() {
                                     </thead>
                                     <tbody>
                                         {
-                                            criteria.filter(c => c.Year == selectedCriteria).map((item, index) => (
+                                            criteria.filter(c => c.Name == selectedCriteria).map((item, index) => (
                                                 <tr key={index}>
                                                     <td>{item.Category}</td>
                                                     <td>{item.Percentage}</td>

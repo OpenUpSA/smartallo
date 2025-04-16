@@ -72,36 +72,22 @@ export const AppProvider = ({ children }) => {
 	useEffect(() => {
 		if (spaces > 0 && selectedMunicipality !== null) {
 			const filteredCriteria = criteria
-				.filter(c => c.Year == selectedCriteria && c.Category !== "Discretionary");
+				.filter(c => c.Name == selectedCriteria && c.Category !== "Discretionary");
 	
-			// Step 1: Raw allocation
 			let rawAllocations = filteredCriteria.map(c => ({
 				label: c.Category,
-				raw: (spaces * c.Percentage) / 100
+				count: (spaces * c.Percentage) / 100
 			}));
 	
-			// Step 2: Round down, track remainders
-			let total = 0;
-			let allocations = rawAllocations.map(a => {
-				const rounded = Math.floor(a.raw);
-				total += rounded;
-				return { ...a, count: rounded, remainder: a.raw - rounded };
-			});
-	
-			// Step 3: Distribute remaining spaces
-			let remainderSpaces = spaces - total;
-			allocations
-				.sort((a, b) => b.remainder - a.remainder)
-				.slice(0, remainderSpaces)
-				.forEach(a => a.count++);
-	
-			// Step 4: Select from each category
 			let selections = [];
+			let usedIDs = new Set();
 			let shortfall = 0;
-			let leftovers = [];
 	
-			allocations.forEach(({ label, count }) => {
+			rawAllocations.forEach(({ label, count }) => {
+				const intCount = Math.floor(count);
+	
 				const filtered = beneficiaries.filter(b =>
+					!usedIDs.has(b['ID Number']) &&
 					b[label] === "1" &&
 					b.Allocated === "0" &&
 					b.Valid === "1" &&
@@ -112,30 +98,23 @@ export const AppProvider = ({ children }) => {
 					.map(b => ({ ...b, _rand: Math.random() }))
 					.sort((a, b) => b.Score - a.Score || b._rand - a._rand);
 	
-				const actual = sorted.slice(0, count);
-				const remaining = sorted.slice(count); // extras for later
+				const actual = sorted.slice(0, intCount);
 	
+				console.log(`${label}: required=${intCount}, available=${filtered.length}, selected=${actual.length}`);
+	
+				actual.forEach(b => usedIDs.add(b['ID Number']));
 				selections.push(...actual);
 	
-				if (actual.length < count) {
-					shortfall += (count - actual.length);
-				} else {
-					leftovers.push(...remaining); // store extras for fallback
+				if (actual.length < intCount) {
+					shortfall += intCount - actual.length;
 				}
 			});
 	
-			// Step 5: Fill shortfall from leftovers
-			if (shortfall > 0) {
-				const filler = leftovers
-					.sort((a, b) => b.Score - a.Score || Math.random() - 0.5)
-					.slice(0, shortfall);
-				selections.push(...filler);
-			}
-	
-			console.log("Final pool length:", selections.length, "/", spaces);
+			console.log("Final total selected:", selections.length, "Shortfall:", shortfall, "Expected:", spaces);
 			setPool(selections);
 		}
 	}, [spaces, selectedCriteria, selectedMunicipality]);
+	
 	
 	
 	

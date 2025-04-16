@@ -21,7 +21,7 @@ export default function Dashboard() {
 	}
 
 	function getCategoryPercentage(category) {
-		const categoryData = criteria.find(c => c.Category === category && c.Year === selectedCriteria);
+		const categoryData = criteria.find(c => c.Category === category && c.Name === selectedCriteria);
 		return categoryData ? Math.floor(spaces / 100 * categoryData.Percentage) : 0;
 	}
 
@@ -82,6 +82,7 @@ export default function Dashboard() {
 									<Dropdown.Menu>
 										<Dropdown.Item onClick={() => setSelectedCriteria("2020")}>2020</Dropdown.Item>
 										<Dropdown.Item onClick={() => setSelectedCriteria("2025")}>2025</Dropdown.Item>
+										<Dropdown.Item onClick={() => setSelectedCriteria("Vets")}>Vets</Dropdown.Item>
 									</Dropdown.Menu>
 								</Dropdown>
 							</Col>

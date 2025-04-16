@@ -1,4 +1,4 @@
-Year,Category,Percentage
+Name,Category,Percentage
 2020,Elderly,10
 2020,Disabled,5
 2020,Veteran,5
@@ -11,3 +11,10 @@ Year,Category,Percentage
 2025,HasClaim,5
 2025,OldApplicant,5
 2025,Discretionary,5
+Vets,Elderly,0
+Vets,Disabled,0
+Vets,Veteran,100
+Vets,HasClaim,0
+Vets,OldApplicant,0
+Vets,Discretionary,0
+
