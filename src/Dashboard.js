@@ -288,6 +288,17 @@ export default function Dashboard() {
 					}
 				</Row>
 
+				<Row className="mb-2">
+					<Col></Col>
+					<Col xs="auto">
+						<Card>
+							<Card.Body>
+								<h3>{pool.length}</h3>
+							</Card.Body>
+						</Card>
+					</Col>
+				</Row>
+
 				<Row>
 					<Col>
 						<Card className="no-border">
