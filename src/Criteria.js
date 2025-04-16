@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Navbar, Nav, Card, Dropdown, Table, Form } from 'react-bootstrap';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Doughnut } from "react-chartjs-2";
+
+import ReactApexChart from 'react-apexcharts';
 
 import { useAppContext } from './AppContext';
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+
 
 export default function Criteria() {
 
@@ -13,26 +13,52 @@ export default function Criteria() {
 
     const [selectedCriteria, setSelectedCriteria] = useState("2020");
 
-    const data = {
-        labels: criteria?.filter(c => c.Year == selectedCriteria).map(item => item.Category),
-        datasets: [
-            {
-                label: 'Categories',
-                data: criteria.filter(c => c.Year == selectedCriteria).map(item => item.Percentage),
-                backgroundColor: [
+    const [chartData, setChartData] = useState(null);
 
-                    '#ff4164',
-                    '#fb9b9c',
-                    '#fbcdaf',
-                    '#c8c8ab',
-                    '#83af9b',
-                    '#999',
-                  ],
+ 
+
+    useEffect(() => {
+
+        console.log("criteria", criteria);
+
+        setChartData(
+            {
+
+
+                series: criteria?.filter(c => c.Year == selectedCriteria).map(item => parseInt(item.Percentage)),
                 
-                borderWidth: 1,
-            },
-        ],
-    };
+                options: {
+                    chart: {
+                        type: 'donut',
+                    },
+                    labels: criteria?.filter(c => c.Year == selectedCriteria).map(item => item.Category),
+                    colors: [
+                        '#ff4164',
+                        '#fb9b9c',
+                        '#fbcdaf',
+                        '#c8c8ab',
+                        '#83af9b',
+                        '#999',
+                    ],
+                    responsive: [{
+                        breakpoint: 480,
+                        options: {
+                            chart: {
+                                width: 200
+                            },
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }]
+                }
+            }
+        )
+
+    }, [selectedCriteria]);
+
+
+
 
 
 
@@ -52,8 +78,8 @@ export default function Criteria() {
                                 {selectedCriteria}
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                    <Dropdown.Item onClick={() => setSelectedCriteria("2020")}>2020</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => setSelectedCriteria("2025")}>2025</Dropdown.Item>
+                                <Dropdown.Item onClick={() => setSelectedCriteria("2020")}>2020</Dropdown.Item>
+                                <Dropdown.Item onClick={() => setSelectedCriteria("2025")}>2025</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </Col>
@@ -87,7 +113,7 @@ export default function Criteria() {
                     <Col>
                         <Card className="no-border">
                             <Card.Body>
-                                {/* <Doughnut data={data} /> */}
+                                {chartData && <ReactApexChart options={chartData.options} series={chartData.series} type="donut" /> }
                             </Card.Body>
                         </Card>
                     </Col>
