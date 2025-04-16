@@ -121,7 +121,7 @@ export const AppProvider = ({ children }) => {
 
 	useEffect(() => {
 		if (selectedMunicipality !== null) {
-			const filteredBeneficiaries = beneficiaries.filter((beneficiary) => beneficiary.Muni === selectedMunicipality);
+			const filteredBeneficiaries = beneficiaries.filter((beneficiary) => beneficiary.Muni === selectedMunicipality && beneficiary.Valid === "1" && beneficiary.Allocated === "0");
 			setPool(filteredBeneficiaries);
 		} else {
 			setPool(beneficiaries);
